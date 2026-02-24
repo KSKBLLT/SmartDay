@@ -3,667 +3,993 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Notes - Стенд</title>
+    <title>Smart Day - Умный список дел с AI</title>
     <style>
-        @page {
-            size: A4 landscape;
-            margin: 0;
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #e8e8ed;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #007aff;
+            --accent-hover: #0051d5;
+            --border: #d2d2d7;
+            --shadow: rgba(0,0,0,0.1);
+            --urgent: #ff3b30;
+            --normal: #007aff;
+            --low: #34c759;
+            --card-bg: #ffffff;
+            --input-bg: #f5f5f7;
         }
-        
+
+        [data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1c1c1e;
+            --bg-tertiary: #2c2c2e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989d;
+            --accent: #0a84ff;
+            --accent-hover: #409cff;
+            --border: #38383a;
+            --shadow: rgba(0,0,0,0.3);
+            --urgent: #ff453a;
+            --normal: #0a84ff;
+            --low: #32d74b;
+            --card-bg: #1c1c1e;
+            --input-bg: #2c2c2e;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-            background: white;
-            color: #1d1d1f;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .poster-container {
-            width: 2100mm;
-            display: flex;
-            flex-direction: column;
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        
-        /* Header */
+
         .header {
-            width: 100%;
-            height: 250mm;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 40px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            width: 52px;
+            height: 32px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
             position: relative;
-            border-bottom: 8mm solid #007AFF;
+            transition: all 0.3s ease;
         }
-        
-        .header-content {
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 180mm;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -5mm;
-            margin-bottom: 20mm;
-            text-shadow: 0 10mm 40mm rgba(0, 122, 255, 0.5);
-        }
-        
-        .header .subtitle {
-            font-size: 55mm;
-            color: #98989d;
-            font-weight: 600;
-            letter-spacing: 2mm;
-        }
-        
-        .header-icon {
-            position: absolute;
-            font-size: 100mm;
-        }
-        
-        .icon-left {
-            left: 150mm;
-            top: 75mm;
-            opacity: 0.3;
-        }
-        
-        .icon-right {
-            right: 150mm;
-            top: 75mm;
-            opacity: 0.3;
-        }
-        
-        /* Main content */
-        .main-content {
-            display: flex;
-            width: 100%;
-        }
-        
-        /* Panels */
-        .panel {
-            padding: 60mm 40mm;
-        }
-        
-        .left-panel {
-            width: 300mm;
-            background: #f5f5f7;
-            border-right: 3mm solid #d2d2d7;
-        }
-        
-        .center-panel {
-            width: 600mm;
-            background: white;
-        }
-        
-        .right-panel {
-            width: 300mm;
-            background: #f5f5f7;
-            border-left: 3mm solid #d2d2d7;
-        }
-        
-        /* Typography */
-        .panel-title {
-            font-size: 65mm;
-            font-weight: 800;
-            margin-bottom: 40mm;
-            padding-bottom: 20mm;
-            border-bottom: 6mm solid #007AFF;
-            color: #1d1d1f;
-            text-transform: uppercase;
-            letter-spacing: -1mm;
-        }
-        
-        .section-title {
-            font-size: 45mm;
-            font-weight: 700;
-            margin: 50mm 0 25mm 0;
-            color: #1d1d1f;
-        }
-        
-        .problem-item, .goal-item, .feature-item, .result-item {
-            margin-bottom: 40mm;
-            position: relative;
-            padding-left: 80mm;
-        }
-        
-        .icon {
-            position: absolute;
-            left: 0;
-            top: -10mm;
-            width: 60mm;
-            height: 60mm;
+
+        .theme-toggle::after {
+            content: '';
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 35mm;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px var(--shadow);
         }
-        
-        .icon-problem {
-            background: rgba(255, 59, 48, 0.15);
+
+        [data-theme="dark"] .theme-toggle::after {
+            transform: translateX(20px);
         }
-        
-        .icon-solution {
-            background: rgba(0, 122, 255, 0.15);
-        }
-        
-        .icon-goal {
-            background: rgba(52, 199, 89, 0.15);
-        }
-        
-        .item-title {
-            font-size: 38mm;
-            font-weight: 700;
-            margin-bottom: 15mm;
-            color: #1d1d1f;
-            line-height: 1.2;
-        }
-        
-        .item-description {
-            font-size: 28mm;
-            color: #86868b;
-            line-height: 1.5;
-        }
-        
-        /* Center panel specific */
-        .feature-card {
-            background: #f5f5f7;
-            border-radius: 30mm;
-            padding: 50mm;
-            margin-bottom: 40mm;
-            border: 3mm solid #e8e8ed;
-        }
-        
-        .feature-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25mm;
-        }
-        
-        .feature-icon {
-            width: 80mm;
-            height: 80mm;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 45mm;
-            margin-right: 30mm;
-        }
-        
-        .feature-icon-blue {
-            background: #007AFF;
-        }
-        
-        .feature-icon-green {
-            background: #34C759;
-        }
-        
-        .feature-icon-purple {
-            background: #5856D6;
-        }
-        
-        .feature-title {
-            font-size: 48mm;
-            font-weight: 700;
-            color: #1d1d1f;
-        }
-        
-        .feature-description {
-            font-size: 32mm;
-            color: #86868b;
-            line-height: 1.6;
-            margin-bottom: 20mm;
-        }
-        
-        .feature-highlight {
-            font-size: 35mm;
-            font-weight: 700;
-            color: #007AFF;
-        }
-        
-        /* Stats section */
-        .stats-section {
-            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
-            border-radius: 30mm;
-            padding: 50mm;
-            margin: 50mm 0;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40mm;
-            margin-top: 40mm;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 110mm;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 15mm;
-        }
-        
-        .stat-value-blue { color: #007AFF; }
-        .stat-value-green { color: #34C759; }
-        .stat-value-orange { color: #FF9F0A; }
-        
-        .stat-label {
-            font-size: 28mm;
-            color: #86868b;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1mm;
-        }
-        
-        /* Code block */
-        .code-section {
-            background: #1c1c1e;
-            border-radius: 20mm;
-            padding: 40mm;
-            margin: 40mm 0;
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-        
-        .code-title {
-            font-size: 40mm;
-            color: #f5f5f7;
-            font-weight: 700;
-            margin-bottom: 30mm;
-            font-family: -apple-system, sans-serif;
-        }
-        
-        .code-line {
-            font-size: 26mm;
-            line-height: 1.8;
-            margin-bottom: 8mm;
-        }
-        
-        .keyword { color: #FF453A; }
-        .variable { color: #67C7FF; }
-        .string { color: #FC6A5D; }
-        .function { color: #DABAFF; }
-        .comment { color: #98989D; }
-        
-        /* Tech stack */
-        .tech-stack {
+
+        .grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 25mm;
-            margin-top: 40mm;
+            gap: 24px;
         }
-        
-        .tech-item {
-            background: white;
-            border-radius: 20mm;
-            padding: 30mm;
-            font-size: 32mm;
-            font-weight: 600;
-            border: 3mm solid #e8e8ed;
+
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
-        
-        /* Results */
-        .result-card {
-            background: white;
-            border-radius: 25mm;
-            padding: 40mm;
-            margin-bottom: 35mm;
-            text-align: center;
-            border: 3mm solid #e8e8ed;
+
+        .panel {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: all 0.3s ease;
         }
-        
-        .result-value {
-            font-size: 95mm;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 20mm;
-        }
-        
-        .result-title {
-            font-size: 35mm;
+
+        .panel-title {
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 15mm;
-            color: #1d1d1f;
-        }
-        
-        .result-description {
-            font-size: 26mm;
-            color: #86868b;
-            line-height: 1.4;
-        }
-        
-        /* Use cases */
-        .use-cases {
-            margin-top: 40mm;
-        }
-        
-        .use-case {
-            font-size: 32mm;
-            padding: 25mm 0;
-            border-bottom: 2mm solid #e8e8ed;
-            font-weight: 500;
-        }
-        
-        .use-case:before {
-            content: '✓ ';
-            color: #34C759;
-            font-weight: 700;
-            font-size: 40mm;
-        }
-        
-        /* CTA */
-        .cta-section {
-            background: #007AFF;
-            color: white;
-            text-align: center;
-            padding: 50mm;
-            border-radius: 25mm;
-            margin-top: 50mm;
-        }
-        
-        .cta-title {
-            font-size: 50mm;
-            font-weight: 800;
-            margin-bottom: 20mm;
-        }
-        
-        .qr-placeholder {
-            width: 200mm;
-            height: 200mm;
-            background: white;
-            margin: 30mm auto;
-            border-radius: 20mm;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 35mm;
-            color: #1d1d1f;
+            gap: 12px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 32px;
             font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
         }
-        
-        .contact-info {
-            font-size: 32mm;
-            margin-top: 25mm;
-            line-height: 1.8;
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
-        
-        /* Highlight box */
-        .highlight-box {
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-secondary);
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.2s ease;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        textarea {
+            min-height: 80px;
+            line-height: 1.6;
+        }
+
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .priority-btn {
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .priority-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .priority-btn.active {
+            border-color: var(--accent);
+            color: var(--accent);
             background: rgba(0, 122, 255, 0.1);
-            border-left: 8mm solid #007AFF;
-            padding: 35mm;
-            margin: 40mm 0;
-            border-radius: 15mm;
         }
-        
-        .highlight-text {
-            font-size: 38mm;
+
+        .priority-btn.urgent.active {
+            border-color: var(--urgent);
+            color: var(--urgent);
+            background: rgba(255, 59, 48, 0.1);
+        }
+
+        .priority-btn.low.active {
+            border-color: var(--low);
+            color: var(--low);
+            background: rgba(52, 199, 89, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .tasks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .tasks-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tasks-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tasks-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .task-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .task-card.completed {
+            opacity: 0.6;
+        }
+
+        .task-card.completed .task-title,
+        .task-card.completed .task-description {
+            text-decoration: line-through;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .task-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            flex: 1;
+        }
+
+        .priority-badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
             font-weight: 700;
-            color: #007AFF;
-            line-height: 1.5;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
         }
-        
-        @media print {
-            .poster-container {
-                page-break-inside: avoid;
+
+        .priority-badge.urgent {
+            background: rgba(255, 59, 48, 0.15);
+            color: var(--urgent);
+        }
+
+        .priority-badge.normal {
+            background: rgba(0, 122, 255, 0.15);
+            color: var(--normal);
+        }
+
+        .priority-badge.low {
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--low);
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px 16px;
+            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .chat-info {
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.5;
+            animation: messageIn 0.3s ease;
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .message.user {
+            background: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.assistant {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-group input {
+            flex: 1;
+        }
+
+        .chat-input-group .btn {
+            width: auto;
+            padding: 14px 24px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-box input {
+            padding-left: 44px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 12px 0 24px;
+                margin-bottom: 24px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+
+            .panel-title {
+                font-size: 20px;
+            }
+
+            .task-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                min-width: 0;
+            }
+
+            .priority-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="poster-container">
-        <!-- HEADER -->
+    <div class="container">
         <div class="header">
-            <div class="header-icon icon-left">📝</div>
-            <div class="header-content">
-                <h1>AI NOTES</h1>
-                <div class="subtitle">УМНЫЕ ЗАМЕТКИ С ИСКУССТВЕННЫМ ИНТЕЛЛЕКТОМ</div>
+            <div class="logo">
+                <span>📅</span>
+                <span>Smart Day</span>
             </div>
-            <div class="header-icon icon-right">🤖</div>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"></button>
         </div>
-        
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <!-- LEFT PANEL -->
-            <div class="panel left-panel">
-                <h2 class="panel-title">Проблема</h2>
-                
-                <div class="problem-item">
-                    <div class="icon icon-problem">⚠️</div>
-                    <div class="item-title">Информационная перегрузка</div>
-                    <div class="item-description">
-                        Современный человек работает с огромным объёмом информации. 
-                        Обычные заметки не справляются с организацией и поиском данных. 
-                        Теряется до 30% времени на рутинную работу с текстом.
+
+        <div class="grid">
+            <!-- LEFT PANEL: TASKS -->
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Мои задачи</span>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label">Всего</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="activeCount">0</div>
+                        <div class="stat-label">Активных</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="completedCount">0</div>
+                        <div class="stat-label">Готово</div>
                     </div>
                 </div>
-                
-                <div class="problem-item">
-                    <div class="icon icon-problem">⏱️</div>
-                    <div class="item-title">Потеря продуктивности</div>
-                    <div class="item-description">
-                        Редактирование, форматирование, перевод, резюмирование — 
-                        задачи, которые отнимают часы каждый день. 
-                        Нет инструмента для автоматизации работы с заметками.
+
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('active')">Активные</button>
+                    <button class="tab" onclick="switchTab('completed')">Готовые</button>
+                </div>
+
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search" placeholder="Поиск задач..." oninput="renderTasks()">
+                </div>
+
+                <div class="input-group">
+                    <select id="sortBy" onchange="renderTasks()">
+                        <option value="date">По дате</option>
+                        <option value="priority">По приоритету</option>
+                        <option value="title">По названию</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="title" placeholder="Название задачи">
+                </div>
+
+                <div class="input-group">
+                    <textarea id="description" placeholder="Описание задачи (необязательно)"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.5px;">Приоритет</label>
+                    <div class="priority-grid">
+                        <button class="priority-btn urgent" onclick="selectPriority('urgent')">
+                            <span>🔥</span>
+                            <span>Срочно</span>
+                        </button>
+                        <button class="priority-btn normal active" onclick="selectPriority('normal')">
+                            <span>📌</span>
+                            <span>Обычно</span>
+                        </button>
+                        <button class="priority-btn low" onclick="selectPriority('low')">
+                            <span>✅</span>
+                            <span>Позже</span>
+                        </button>
                     </div>
                 </div>
-                
-                <div class="problem-item">
-                    <div class="icon icon-problem">🚫</div>
-                    <div class="item-title">Отсутствие AI-помощи</div>
-                    <div class="item-description">
-                        Существующие приложения для заметок не имеют встроенного AI. 
-                        Нужно переключаться между разными сервисами, 
-                        теряя контекст и время.
-                    </div>
-                </div>
-                
-                <div class="highlight-box">
-                    <div class="highlight-text">
-                        Решение: AI-помощник, встроенный в каждую заметку
-                    </div>
-                </div>
-                
-                <h2 class="section-title">Цели проекта</h2>
-                
-                <div class="goal-item">
-                    <div class="icon icon-goal">🎯</div>
-                    <div class="item-title">Повысить продуктивность</div>
-                    <div class="item-description">
-                        Сократить время на работу с текстом в 3 раза 
-                        благодаря AI-автоматизации
-                    </div>
-                </div>
-                
-                <div class="goal-item">
-                    <div class="icon icon-goal">⚡</div>
-                    <div class="item-title">Упростить работу с AI</div>
-                    <div class="item-description">
-                        Сделать мощные AI-возможности доступными 
-                        каждому без технических знаний
-                    </div>
-                </div>
-                
-                <div class="goal-item">
-                    <div class="icon icon-goal">🌟</div>
-                    <div class="item-title">Создать современный UX</div>
-                    <div class="item-description">
-                        Минималистичный дизайн в стиле Apple, 
-                        работающий на всех устройствах
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CENTER PANEL -->
-            <div class="panel center-panel">
-                <h2 class="panel-title">Возможности</h2>
-                
-                <div class="feature-card">
-                    <div class="feature-header">
-                        <div class="feature-icon feature-icon-blue">💬</div>
-                        <div class="feature-title">AI-чат для каждой заметки</div>
-                    </div>
-                    <div class="feature-description">
-                        Каждая заметка имеет собственный AI-чат с полным контекстом. 
-                        Улучшайте текст, создавайте резюме, переводите на другие языки, 
-                        генерируйте идеи — всё это не выходя из заметки.
-                    </div>
-                    <div class="feature-highlight">
-                        ⚡ Powered by Claude Sonnet 4.5 — самая продвинутая AI-модель Anthropic
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-header">
-                        <div class="feature-icon feature-icon-green">🔍</div>
-                        <div class="feature-title">Умная организация</div>
-                    </div>
-                    <div class="feature-description">
-                        Мгновенный поиск по всем заметкам, гибкая система тегов, 
-                        три уровня приоритета (Срочно, Обычно, Позже), 
-                        сортировка по дате, приоритету или названию.
-                    </div>
-                    <div class="feature-highlight">
-                        📊 Статистика в реальном времени — видите прогресс сразу
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-header">
-                        <div class="feature-icon feature-icon-purple">✨</div>
-                        <div class="feature-title">Минималистичный дизайн</div>
-                    </div>
-                    <div class="feature-description">
-                        Интерфейс в стиле Apple с тёмной и светлой темой. 
-                        Плавные анимации, интуитивное управление, 
-                        адаптивный дизайн для всех устройств.
-                    </div>
-                    <div class="feature-highlight">
-                        🎨 Каждая деталь продумана для максимального комфорта
-                    </div>
-                </div>
-                
-                <div class="stats-section">
-                    <h2 class="section-title" style="margin-top: 0;">Ключевые показатели</h2>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value stat-value-blue">100%</div>
-                            <div class="stat-label">Бесплатно</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value stat-value-green">24/7</div>
-                            <div class="stat-label">Доступность</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value stat-value-orange">∞</div>
-                            <div class="stat-label">Заметок</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="code-section">
-                    <div class="code-title">💻 Технология под капотом</div>
-                    <div class="code-line">
-                        <span class="keyword">const</span> 
-                        <span class="variable">response</span> = 
-                        <span class="keyword">await</span> 
-                        <span class="function">fetch</span>(<span class="string">'https://api.anthropic.com'</span>)
-                    </div>
-                    <div class="code-line">
-                        <span class="variable">model</span>: <span class="string">'claude-sonnet-4-20250514'</span>
-                    </div>
-                    <div class="code-line">
-                        <span class="variable">max_tokens</span>: <span class="string">1000</span>
-                    </div>
-                    <div class="code-line">
-                        <span class="comment">// Real-time AI assistance</span>
-                    </div>
-                    <div class="code-line">
-                        <span class="keyword">return</span> <span class="variable">aiResponse</span>
+
+                <button class="btn" onclick="addTask()">Добавить задачу</button>
+
+                <div class="tasks-list" id="tasksList" style="margin-top: 24px;">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <div class="empty-state-text">Нет задач</div>
                     </div>
                 </div>
             </div>
-            
-            <!-- RIGHT PANEL -->
-            <div class="panel right-panel">
-                <h2 class="panel-title">Результаты</h2>
-                
-                <div class="result-card">
-                    <div class="result-value stat-value-blue">3×</div>
-                    <div class="result-title">Быстрее работа с текстом</div>
-                    <div class="result-description">
-                        AI автоматизирует рутинные задачи: 
-                        редактирование, форматирование, 
-                        перевод, резюмирование
+
+            <!-- RIGHT PANEL: AI CHAT -->
+            <div class="panel">
+                <div class="panel-title">
+                    <span>🤖</span>
+                    <span>AI Помощник</span>
+                </div>
+
+                <div class="chat-info" id="chatInfo">Общий чат</div>
+
+                <button class="btn secondary" id="backBtn" style="display:none; margin-bottom: 16px" onclick="closeChat()">
+                    ← Вернуться
+                </button>
+
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message assistant">
+                            Привет! Я AI помощник Smart Day. Могу помочь разбить задачу на шаги, оценить время выполнения, расставить приоритеты. Просто расскажи о своей задаче!
+                        </div>
                     </div>
-                </div>
-                
-                <div class="result-card">
-                    <div class="result-value stat-value-green">95%</div>
-                    <div class="result-title">Точность AI-ответов</div>
-                    <div class="result-description">
-                        Claude Sonnet 4.5 — 
-                        одна из самых точных 
-                        AI-моделей в мире
-                    </div>
-                </div>
-                
-                <div class="result-card">
-                    <div class="result-value stat-value-orange">0₽</div>
-                    <div class="result-title">Полностью бесплатно</div>
-                    <div class="result-description">
-                        Нет подписок, 
-                        нет скрытых платежей, 
-                        все функции доступны сразу
-                    </div>
-                </div>
-                
-                <h2 class="section-title">Технологии</h2>
-                
-                <div class="tech-stack">
-                    <div class="tech-item">🤖 Claude API (Anthropic)</div>
-                    <div class="tech-item">⚡ Vanilla JavaScript</div>
-                    <div class="tech-item">💾 LocalStorage API</div>
-                    <div class="tech-item">🎨 CSS3 Animations</div>
-                    <div class="tech-item">📱 Responsive Design</div>
-                </div>
-                
-                <h2 class="section-title">Применение</h2>
-                
-                <div class="use-cases">
-                    <div class="use-case">Учёба и конспекты</div>
-                    <div class="use-case">Рабочие задачи и проекты</div>
-                    <div class="use-case">Личные заметки и дневник</div>
-                    <div class="use-case">Идеи и планирование</div>
-                    <div class="use-case">Исследования и анализ</div>
-                </div>
-                
-                <div class="cta-section">
-                    <div class="cta-title">ПОПРОБУЙТЕ ДЕМО</div>
-                    <div class="qr-placeholder">QR-КОД</div>
-                    <div class="contact-info">
-                        📧 your-email@example.com<br>
-                        💬 @your_telegram<br>
-                        🌐 your-website.com
+
+                    <div class="chat-input-group">
+                        <input type="text" id="chatInput" placeholder="Напишите сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
+                        <button class="btn" onclick="sendMessage()" id="sendBtn">
+                            Отправить
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script>
-        // Auto-print on load for PDF generation
-        // window.onload = () => window.print();
+        let tasks = [];
+        let tab = 'active';
+        let priority = 'normal';
+        let currentTask = null;
+        let globalChat = [];
+        let theme = 'light';
+
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                theme = saved;
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+        }
+
+        function toggleTheme() {
+            theme = theme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function selectPriority(p) {
+            priority = p;
+            document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
+            event.target.closest('.priority-btn').classList.add('active');
+        }
+
+        function switchTab(t) {
+            tab = t;
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTasks();
+        }
+
+        function addTask() {
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            
+            if (!title) {
+                alert('Введите название задачи');
+                return;
+            }
+            
+            const task = {
+                id: Date.now(),
+                title,
+                description,
+                priority,
+                completed: false,
+                created: new Date().toLocaleString('ru'),
+                chat: []
+            };
+            
+            tasks.unshift(task);
+            saveTasks();
+            renderTasks();
+            
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            selectPriority('normal');
+            updateStats();
+        }
+
+        function deleteTask(id) {
+            if (!confirm('Удалить задачу?')) return;
+            tasks = tasks.filter(t => t.id !== id);
+            if (currentTask === id) closeChat();
+            saveTasks();
+            renderTasks();
+            updateStats();
+        }
+
+        function toggleComplete(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+                updateStats();
+            }
+        }
+
+        function openChat(task) {
+            currentTask = task.id;
+            document.getElementById('chatInfo').textContent = `Чат: ${task.title}`;
+            document.getElementById('backBtn').style.display = 'block';
+            
+            const chat = document.getElementById('chatMessages');
+            chat.innerHTML = '';
+            
+            if (task.chat.length === 0) {
+                addMessageToDOM('assistant', `Обсудим задачу "${task.title}"? Могу помочь разбить её на шаги, оценить время или расставить приоритеты.`);
+            } else {
+                task.chat.forEach(m => {
+                    addMessageToDOM(m.role, m.content);
+                });
+            }
+        }
+
+        function closeChat() {
+            currentTask = null;
+            document.getElementById('chatInfo').textContent = 'Общий чат';
+            document.getElementById('backBtn').style.display = 'none';
+            
+            const chat = document.getElementById('chatMessages');
+            chat.innerHTML = '';
+            
+            if (globalChat.length === 0) {
+                addMessageToDOM('assistant', 'Привет! Я AI помощник Smart Day. Могу помочь разбить задачу на шаги, оценить время выполнения, расставить приоритеты. Просто расскажи о своей задаче!');
+            } else {
+                globalChat.forEach(m => {
+                    addMessageToDOM(m.role, m.content);
+                });
+            }
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('tasksList');
+            const search = document.getElementById('search').value.toLowerCase();
+            const sortBy = document.getElementById('sortBy').value;
+            
+            let filtered = tasks.filter(t => {
+                const matchTab = tab === 'active' ? !t.completed : t.completed;
+                const matchSearch = !search || 
+                    t.title.toLowerCase().includes(search) || 
+                    t.description.toLowerCase().includes(search);
+                return matchTab && matchSearch;
+            });
+
+            if (sortBy === 'priority') {
+                const priorityOrder = {urgent: 0, normal: 1, low: 2};
+                filtered.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+            } else if (sortBy === 'title') {
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+            } else {
+                filtered.sort((a, b) => b.id - a.id);
+            }
+            
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-text">Ничего не найдено</div>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map(t => {
+                const priorityClass = t.priority;
+                const priorityText = {
+                    urgent: '🔥 Срочно',
+                    normal: '📌 Обычно',
+                    low: '✅ Позже'
+                }[t.priority];
+                
+                return `
+                    <div class="task-card ${t.completed ? 'completed' : ''}">
+                        <div class="task-header">
+                            <div class="task-title">${esc(t.title)}</div>
+                            <div class="priority-badge ${priorityClass}">${priorityText}</div>
+                        </div>
+                        ${t.description ? `<div class="task-description">${esc(t.description)}</div>` : ''}
+                        <div class="task-actions">
+                            <button class="btn action-btn" onclick='openChat(${JSON.stringify(t).replace(/'/g, "&#39;")})'>💬 AI Чат</button>
+                            <button class="btn ${t.completed ? 'secondary' : ''} action-btn" onclick="toggleComplete(${t.id})">${t.completed ? '↩️ Вернуть' : '✓ Готово'}</button>
+                            <button class="btn secondary action-btn" style="background: var(--urgent);" onclick="deleteTask(${t.id})">🗑️ Удалить</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            addMessageToDOM('user', msg);
+            input.value = '';
+
+            const btn = document.getElementById('sendBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loader"></span>';
+
+            try {
+                let history;
+                let system = 'Ты AI помощник для управления задачами Smart Day. Помогаешь разбивать задачи на шаги, оценивать время, расставлять приоритеты. Отвечай кратко и по делу на русском языке.';
+                
+                if (currentTask) {
+                    const task = tasks.find(t => t.id === currentTask);
+                    history = task.chat;
+                    system += ` Обсуждаем задачу: "${task.title}".`;
+                    if (task.description) {
+                        system += ` Описание: "${task.description}".`;
+                    }
+                } else {
+                    history = globalChat;
+                }
+
+                history.push({role: 'user', content: msg});
+
+                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': 'YOUR_API_KEY_HERE',
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1000,
+                        system,
+                        messages: history
+                    })
+                });
+
+                const data = await res.json();
+                const reply = data.content[0].text;
+                
+                history.push({role: 'assistant', content: reply});
+                addMessageToDOM('assistant', reply);
+
+                if (currentTask) {
+                    const task = tasks.find(t => t.id === currentTask);
+                    task.chat = history;
+                    saveTasks();
+                }
+
+            } catch (e) {
+                addMessageToDOM('assistant', 'Ошибка подключения к AI. Проверьте API ключ и интернет.');
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Отправить';
+            }
+        }
+
+        function addMessageToDOM(role, content) {
+            const chat = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = `message ${role}`;
+            msg.textContent = content;
+            chat.appendChild(msg);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function updateStats() {
+            document.getElementById('totalCount').textContent = tasks.length;
+            document.getElementById('activeCount').textContent = tasks.filter(t => !t.completed).length;
+            document.getElementById('completedCount').textContent = tasks.filter(t => t.completed).length;
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            const saved = localStorage.getItem('tasks');
+            if (saved) {
+                tasks = JSON.parse(saved);
+                renderTasks();
+                updateStats();
+            }
+        }
+
+        function esc(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        initTheme();
+        loadTasks();
+        renderTasks();
+        updateStats();
     </script>
 </body>
 </html>
