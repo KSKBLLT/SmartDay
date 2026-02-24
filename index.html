@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Notes - Стенд</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            background: white;
+            color: #1d1d1f;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .poster-container {
+            width: 2100mm;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            width: 100%;
+            height: 250mm;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 8mm solid #007AFF;
+        }
+        
+        .header-content {
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 180mm;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -5mm;
+            margin-bottom: 20mm;
+            text-shadow: 0 10mm 40mm rgba(0, 122, 255, 0.5);
+        }
+        
+        .header .subtitle {
+            font-size: 55mm;
+            color: #98989d;
+            font-weight: 600;
+            letter-spacing: 2mm;
+        }
+        
+        .header-icon {
+            position: absolute;
+            font-size: 100mm;
+        }
+        
+        .icon-left {
+            left: 150mm;
+            top: 75mm;
+            opacity: 0.3;
+        }
+        
+        .icon-right {
+            right: 150mm;
+            top: 75mm;
+            opacity: 0.3;
+        }
+        
+        /* Main content */
+        .main-content {
+            display: flex;
+            width: 100%;
+        }
+        
+        /* Panels */
+        .panel {
+            padding: 60mm 40mm;
+        }
+        
+        .left-panel {
+            width: 300mm;
+            background: #f5f5f7;
+            border-right: 3mm solid #d2d2d7;
+        }
+        
+        .center-panel {
+            width: 600mm;
+            background: white;
+        }
+        
+        .right-panel {
+            width: 300mm;
+            background: #f5f5f7;
+            border-left: 3mm solid #d2d2d7;
+        }
+        
+        /* Typography */
+        .panel-title {
+            font-size: 65mm;
+            font-weight: 800;
+            margin-bottom: 40mm;
+            padding-bottom: 20mm;
+            border-bottom: 6mm solid #007AFF;
+            color: #1d1d1f;
+            text-transform: uppercase;
+            letter-spacing: -1mm;
+        }
+        
+        .section-title {
+            font-size: 45mm;
+            font-weight: 700;
+            margin: 50mm 0 25mm 0;
+            color: #1d1d1f;
+        }
+        
+        .problem-item, .goal-item, .feature-item, .result-item {
+            margin-bottom: 40mm;
+            position: relative;
+            padding-left: 80mm;
+        }
+        
+        .icon {
+            position: absolute;
+            left: 0;
+            top: -10mm;
+            width: 60mm;
+            height: 60mm;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35mm;
+        }
+        
+        .icon-problem {
+            background: rgba(255, 59, 48, 0.15);
+        }
+        
+        .icon-solution {
+            background: rgba(0, 122, 255, 0.15);
+        }
+        
+        .icon-goal {
+            background: rgba(52, 199, 89, 0.15);
+        }
+        
+        .item-title {
+            font-size: 38mm;
+            font-weight: 700;
+            margin-bottom: 15mm;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+        
+        .item-description {
+            font-size: 28mm;
+            color: #86868b;
+            line-height: 1.5;
+        }
+        
+        /* Center panel specific */
+        .feature-card {
+            background: #f5f5f7;
+            border-radius: 30mm;
+            padding: 50mm;
+            margin-bottom: 40mm;
+            border: 3mm solid #e8e8ed;
+        }
+        
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25mm;
+        }
+        
+        .feature-icon {
+            width: 80mm;
+            height: 80mm;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45mm;
+            margin-right: 30mm;
+        }
+        
+        .feature-icon-blue {
+            background: #007AFF;
+        }
+        
+        .feature-icon-green {
+            background: #34C759;
+        }
+        
+        .feature-icon-purple {
+            background: #5856D6;
+        }
+        
+        .feature-title {
+            font-size: 48mm;
+            font-weight: 700;
+            color: #1d1d1f;
+        }
+        
+        .feature-description {
+            font-size: 32mm;
+            color: #86868b;
+            line-height: 1.6;
+            margin-bottom: 20mm;
+        }
+        
+        .feature-highlight {
+            font-size: 35mm;
+            font-weight: 700;
+            color: #007AFF;
+        }
+        
+        /* Stats section */
+        .stats-section {
+            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+            border-radius: 30mm;
+            padding: 50mm;
+            margin: 50mm 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40mm;
+            margin-top: 40mm;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 110mm;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 15mm;
+        }
+        
+        .stat-value-blue { color: #007AFF; }
+        .stat-value-green { color: #34C759; }
+        .stat-value-orange { color: #FF9F0A; }
+        
+        .stat-label {
+            font-size: 28mm;
+            color: #86868b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1mm;
+        }
+        
+        /* Code block */
+        .code-section {
+            background: #1c1c1e;
+            border-radius: 20mm;
+            padding: 40mm;
+            margin: 40mm 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        
+        .code-title {
+            font-size: 40mm;
+            color: #f5f5f7;
+            font-weight: 700;
+            margin-bottom: 30mm;
+            font-family: -apple-system, sans-serif;
+        }
+        
+        .code-line {
+            font-size: 26mm;
+            line-height: 1.8;
+            margin-bottom: 8mm;
+        }
+        
+        .keyword { color: #FF453A; }
+        .variable { color: #67C7FF; }
+        .string { color: #FC6A5D; }
+        .function { color: #DABAFF; }
+        .comment { color: #98989D; }
+        
+        /* Tech stack */
+        .tech-stack {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25mm;
+            margin-top: 40mm;
+        }
+        
+        .tech-item {
+            background: white;
+            border-radius: 20mm;
+            padding: 30mm;
+            font-size: 32mm;
+            font-weight: 600;
+            border: 3mm solid #e8e8ed;
+        }
+        
+        /* Results */
+        .result-card {
+            background: white;
+            border-radius: 25mm;
+            padding: 40mm;
+            margin-bottom: 35mm;
+            text-align: center;
+            border: 3mm solid #e8e8ed;
+        }
+        
+        .result-value {
+            font-size: 95mm;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 20mm;
+        }
+        
+        .result-title {
+            font-size: 35mm;
+            font-weight: 700;
+            margin-bottom: 15mm;
+            color: #1d1d1f;
+        }
+        
+        .result-description {
+            font-size: 26mm;
+            color: #86868b;
+            line-height: 1.4;
+        }
+        
+        /* Use cases */
+        .use-cases {
+            margin-top: 40mm;
+        }
+        
+        .use-case {
+            font-size: 32mm;
+            padding: 25mm 0;
+            border-bottom: 2mm solid #e8e8ed;
+            font-weight: 500;
+        }
+        
+        .use-case:before {
+            content: '✓ ';
+            color: #34C759;
+            font-weight: 700;
+            font-size: 40mm;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: #007AFF;
+            color: white;
+            text-align: center;
+            padding: 50mm;
+            border-radius: 25mm;
+            margin-top: 50mm;
+        }
+        
+        .cta-title {
+            font-size: 50mm;
+            font-weight: 800;
+            margin-bottom: 20mm;
+        }
+        
+        .qr-placeholder {
+            width: 200mm;
+            height: 200mm;
+            background: white;
+            margin: 30mm auto;
+            border-radius: 20mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35mm;
+            color: #1d1d1f;
+            font-weight: 700;
+        }
+        
+        .contact-info {
+            font-size: 32mm;
+            margin-top: 25mm;
+            line-height: 1.8;
+        }
+        
+        /* Highlight box */
+        .highlight-box {
+            background: rgba(0, 122, 255, 0.1);
+            border-left: 8mm solid #007AFF;
+            padding: 35mm;
+            margin: 40mm 0;
+            border-radius: 15mm;
+        }
+        
+        .highlight-text {
+            font-size: 38mm;
+            font-weight: 700;
+            color: #007AFF;
+            line-height: 1.5;
+        }
+        
+        @media print {
+            .poster-container {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-icon icon-left">📝</div>
+            <div class="header-content">
+                <h1>AI NOTES</h1>
+                <div class="subtitle">УМНЫЕ ЗАМЕТКИ С ИСКУССТВЕННЫМ ИНТЕЛЛЕКТОМ</div>
+            </div>
+            <div class="header-icon icon-right">🤖</div>
+        </div>
+        
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- LEFT PANEL -->
+            <div class="panel left-panel">
+                <h2 class="panel-title">Проблема</h2>
+                
+                <div class="problem-item">
+                    <div class="icon icon-problem">⚠️</div>
+                    <div class="item-title">Информационная перегрузка</div>
+                    <div class="item-description">
+                        Современный человек работает с огромным объёмом информации. 
+                        Обычные заметки не справляются с организацией и поиском данных. 
+                        Теряется до 30% времени на рутинную работу с текстом.
+                    </div>
+                </div>
+                
+                <div class="problem-item">
+                    <div class="icon icon-problem">⏱️</div>
+                    <div class="item-title">Потеря продуктивности</div>
+                    <div class="item-description">
+                        Редактирование, форматирование, перевод, резюмирование — 
+                        задачи, которые отнимают часы каждый день. 
+                        Нет инструмента для автоматизации работы с заметками.
+                    </div>
+                </div>
+                
+                <div class="problem-item">
+                    <div class="icon icon-problem">🚫</div>
+                    <div class="item-title">Отсутствие AI-помощи</div>
+                    <div class="item-description">
+                        Существующие приложения для заметок не имеют встроенного AI. 
+                        Нужно переключаться между разными сервисами, 
+                        теряя контекст и время.
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <div class="highlight-text">
+                        Решение: AI-помощник, встроенный в каждую заметку
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Цели проекта</h2>
+                
+                <div class="goal-item">
+                    <div class="icon icon-goal">🎯</div>
+                    <div class="item-title">Повысить продуктивность</div>
+                    <div class="item-description">
+                        Сократить время на работу с текстом в 3 раза 
+                        благодаря AI-автоматизации
+                    </div>
+                </div>
+                
+                <div class="goal-item">
+                    <div class="icon icon-goal">⚡</div>
+                    <div class="item-title">Упростить работу с AI</div>
+                    <div class="item-description">
+                        Сделать мощные AI-возможности доступными 
+                        каждому без технических знаний
+                    </div>
+                </div>
+                
+                <div class="goal-item">
+                    <div class="icon icon-goal">🌟</div>
+                    <div class="item-title">Создать современный UX</div>
+                    <div class="item-description">
+                        Минималистичный дизайн в стиле Apple, 
+                        работающий на всех устройствах
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CENTER PANEL -->
+            <div class="panel center-panel">
+                <h2 class="panel-title">Возможности</h2>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon feature-icon-blue">💬</div>
+                        <div class="feature-title">AI-чат для каждой заметки</div>
+                    </div>
+                    <div class="feature-description">
+                        Каждая заметка имеет собственный AI-чат с полным контекстом. 
+                        Улучшайте текст, создавайте резюме, переводите на другие языки, 
+                        генерируйте идеи — всё это не выходя из заметки.
+                    </div>
+                    <div class="feature-highlight">
+                        ⚡ Powered by Claude Sonnet 4.5 — самая продвинутая AI-модель Anthropic
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon feature-icon-green">🔍</div>
+                        <div class="feature-title">Умная организация</div>
+                    </div>
+                    <div class="feature-description">
+                        Мгновенный поиск по всем заметкам, гибкая система тегов, 
+                        три уровня приоритета (Срочно, Обычно, Позже), 
+                        сортировка по дате, приоритету или названию.
+                    </div>
+                    <div class="feature-highlight">
+                        📊 Статистика в реальном времени — видите прогресс сразу
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon feature-icon-purple">✨</div>
+                        <div class="feature-title">Минималистичный дизайн</div>
+                    </div>
+                    <div class="feature-description">
+                        Интерфейс в стиле Apple с тёмной и светлой темой. 
+                        Плавные анимации, интуитивное управление, 
+                        адаптивный дизайн для всех устройств.
+                    </div>
+                    <div class="feature-highlight">
+                        🎨 Каждая деталь продумана для максимального комфорта
+                    </div>
+                </div>
+                
+                <div class="stats-section">
+                    <h2 class="section-title" style="margin-top: 0;">Ключевые показатели</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value stat-value-blue">100%</div>
+                            <div class="stat-label">Бесплатно</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value stat-value-green">24/7</div>
+                            <div class="stat-label">Доступность</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value stat-value-orange">∞</div>
+                            <div class="stat-label">Заметок</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-section">
+                    <div class="code-title">💻 Технология под капотом</div>
+                    <div class="code-line">
+                        <span class="keyword">const</span> 
+                        <span class="variable">response</span> = 
+                        <span class="keyword">await</span> 
+                        <span class="function">fetch</span>(<span class="string">'https://api.anthropic.com'</span>)
+                    </div>
+                    <div class="code-line">
+                        <span class="variable">model</span>: <span class="string">'claude-sonnet-4-20250514'</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="variable">max_tokens</span>: <span class="string">1000</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="comment">// Real-time AI assistance</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="keyword">return</span> <span class="variable">aiResponse</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RIGHT PANEL -->
+            <div class="panel right-panel">
+                <h2 class="panel-title">Результаты</h2>
+                
+                <div class="result-card">
+                    <div class="result-value stat-value-blue">3×</div>
+                    <div class="result-title">Быстрее работа с текстом</div>
+                    <div class="result-description">
+                        AI автоматизирует рутинные задачи: 
+                        редактирование, форматирование, 
+                        перевод, резюмирование
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-value stat-value-green">95%</div>
+                    <div class="result-title">Точность AI-ответов</div>
+                    <div class="result-description">
+                        Claude Sonnet 4.5 — 
+                        одна из самых точных 
+                        AI-моделей в мире
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-value stat-value-orange">0₽</div>
+                    <div class="result-title">Полностью бесплатно</div>
+                    <div class="result-description">
+                        Нет подписок, 
+                        нет скрытых платежей, 
+                        все функции доступны сразу
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Технологии</h2>
+                
+                <div class="tech-stack">
+                    <div class="tech-item">🤖 Claude API (Anthropic)</div>
+                    <div class="tech-item">⚡ Vanilla JavaScript</div>
+                    <div class="tech-item">💾 LocalStorage API</div>
+                    <div class="tech-item">🎨 CSS3 Animations</div>
+                    <div class="tech-item">📱 Responsive Design</div>
+                </div>
+                
+                <h2 class="section-title">Применение</h2>
+                
+                <div class="use-cases">
+                    <div class="use-case">Учёба и конспекты</div>
+                    <div class="use-case">Рабочие задачи и проекты</div>
+                    <div class="use-case">Личные заметки и дневник</div>
+                    <div class="use-case">Идеи и планирование</div>
+                    <div class="use-case">Исследования и анализ</div>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="cta-title">ПОПРОБУЙТЕ ДЕМО</div>
+                    <div class="qr-placeholder">QR-КОД</div>
+                    <div class="contact-info">
+                        📧 your-email@example.com<br>
+                        💬 @your_telegram<br>
+                        🌐 your-website.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-print on load for PDF generation
+        // window.onload = () => window.print();
+    </script>
+</body>
+</html>
