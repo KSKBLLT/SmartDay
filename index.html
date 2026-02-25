@@ -46,10 +46,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s ease;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
         }
@@ -61,9 +61,7 @@
         }
 
         @media (min-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+            .container { padding: 20px; }
         }
 
         .header {
@@ -75,27 +73,16 @@
             margin-bottom: 24px;
         }
 
-        @media (min-width: 768px) {
-            .header {
-                padding: 20px 0 40px;
-                margin-bottom: 40px;
-            }
-        }
-
         .logo {
             font-size: 22px;
             font-weight: 700;
-            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         @media (min-width: 768px) {
-            .logo {
-                font-size: 28px;
-                gap: 12px;
-            }
+            .logo { font-size: 28px; }
         }
 
         .theme-toggle {
@@ -106,7 +93,6 @@
             border: none;
             cursor: pointer;
             position: relative;
-            transition: all 0.3s ease;
         }
 
         .theme-toggle::after {
@@ -118,8 +104,7 @@
             position: absolute;
             top: 2px;
             left: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.3s;
         }
 
         [data-theme="dark"] .theme-toggle::after {
@@ -133,10 +118,7 @@
         }
 
         @media (min-width: 1024px) {
-            .grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 24px;
-            }
+            .grid { grid-template-columns: 1fr 1fr; }
         }
 
         .panel {
@@ -145,38 +127,19 @@
             padding: 20px;
             border: 1px solid var(--border);
             box-shadow: 0 4px 20px var(--shadow);
-            transition: all 0.3s ease;
         }
 
         @media (min-width: 768px) {
-            .panel {
-                border-radius: 20px;
-                padding: 28px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .panel {
-                padding: 32px;
-            }
+            .panel { padding: 28px; }
         }
 
         .panel-title {
             font-size: 20px;
             font-weight: 700;
-            letter-spacing: -0.5px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        @media (min-width: 768px) {
-            .panel-title {
-                font-size: 24px;
-                margin-bottom: 24px;
-                gap: 12px;
-            }
         }
 
         .stats {
@@ -186,58 +149,24 @@
             margin-bottom: 24px;
         }
 
-        @media (min-width: 768px) {
-            .stats {
-                gap: 16px;
-                margin-bottom: 32px;
-            }
-        }
-
         .stat-card {
             background: var(--bg-secondary);
             padding: 16px 12px;
             border-radius: 12px;
             text-align: center;
-            transition: all 0.2s ease;
-        }
-
-        @media (min-width: 768px) {
-            .stat-card {
-                padding: 20px;
-                border-radius: 16px;
-            }
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .stat-value {
             font-size: 24px;
             font-weight: 700;
             color: var(--accent);
-            margin-bottom: 4px;
-        }
-
-        @media (min-width: 768px) {
-            .stat-value {
-                font-size: 32px;
-            }
         }
 
         .stat-label {
             font-size: 10px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: 600;
-        }
-
-        @media (min-width: 768px) {
-            .stat-label {
-                font-size: 12px;
-            }
         }
 
         .tabs {
@@ -249,16 +178,9 @@
             margin-bottom: 20px;
         }
 
-        @media (min-width: 768px) {
-            .tabs {
-                gap: 8px;
-                margin-bottom: 24px;
-            }
-        }
-
         .tab {
             flex: 1;
-            padding: 10px 12px;
+            padding: 10px;
             background: transparent;
             border: none;
             border-radius: 8px;
@@ -266,14 +188,6 @@
             font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
-            transition: all 0.2s ease;
-        }
-
-        @media (min-width: 768px) {
-            .tab {
-                padding: 10px 16px;
-                font-size: 14px;
-            }
         }
 
         .tab.active {
@@ -286,12 +200,6 @@
             margin-bottom: 14px;
         }
 
-        @media (min-width: 768px) {
-            .input-group {
-                margin-bottom: 16px;
-            }
-        }
-
         input, textarea, select {
             width: 100%;
             padding: 12px 14px;
@@ -301,31 +209,16 @@
             font-size: 15px;
             color: var(--text-primary);
             font-family: inherit;
-            transition: all 0.2s ease;
-            resize: vertical;
-        }
-
-        @media (min-width: 768px) {
-            input, textarea, select {
-                padding: 14px 16px;
-            }
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
 
         textarea {
             min-height: 70px;
-            line-height: 1.6;
-        }
-
-        @media (min-width: 768px) {
-            textarea {
-                min-height: 80px;
-            }
+            resize: vertical;
         }
 
         .priority-grid {
@@ -333,13 +226,6 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
             margin-bottom: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .priority-grid {
-                gap: 12px;
-                margin-bottom: 24px;
-            }
         }
 
         .priority-btn {
@@ -351,23 +237,10 @@
             font-size: 12px;
             font-weight: 600;
             color: var(--text-secondary);
-            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
-        }
-
-        @media (min-width: 768px) {
-            .priority-btn {
-                padding: 14px;
-                font-size: 13px;
-                gap: 6px;
-            }
-        }
-
-        .priority-btn:hover {
-            transform: translateY(-2px);
         }
 
         .priority-btn.active {
@@ -398,23 +271,10 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow);
-        }
-
-        .btn:active {
-            transform: translateY(0);
         }
 
         .btn:disabled {
             opacity: 0.5;
-            cursor: not-allowed;
         }
 
         .btn.secondary {
@@ -428,35 +288,6 @@
             gap: 14px;
             max-height: 400px;
             overflow-y: auto;
-            padding-right: 4px;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (min-width: 768px) {
-            .tasks-list {
-                gap: 16px;
-                max-height: 500px;
-                padding-right: 8px;
-            }
-        }
-
-        .tasks-list::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        @media (min-width: 768px) {
-            .tasks-list::-webkit-scrollbar {
-                width: 6px;
-            }
-        }
-
-        .tasks-list::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .tasks-list::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
         }
 
         .task-card {
@@ -464,69 +295,27 @@
             padding: 16px;
             border-radius: 14px;
             border: 1px solid var(--border);
-            transition: all 0.2s ease;
-            animation: slideIn 0.3s ease;
-        }
-
-        @media (min-width: 768px) {
-            .task-card {
-                padding: 20px;
-                border-radius: 16px;
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .task-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--shadow);
         }
 
         .task-card.completed {
             opacity: 0.6;
         }
 
-        .task-card.completed .task-title,
-        .task-card.completed .task-description {
+        .task-card.completed .task-title {
             text-decoration: line-through;
         }
 
         .task-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             margin-bottom: 10px;
             gap: 10px;
-        }
-
-        @media (min-width: 768px) {
-            .task-header {
-                margin-bottom: 12px;
-                gap: 12px;
-            }
         }
 
         .task-title {
             font-size: 16px;
             font-weight: 600;
-            letter-spacing: -0.3px;
             flex: 1;
-            word-break: break-word;
-        }
-
-        @media (min-width: 768px) {
-            .task-title {
-                font-size: 18px;
-            }
         }
 
         .priority-badge {
@@ -535,15 +324,7 @@
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             white-space: nowrap;
-        }
-
-        @media (min-width: 768px) {
-            .priority-badge {
-                padding: 6px 12px;
-                font-size: 11px;
-            }
         }
 
         .priority-badge.urgent {
@@ -563,17 +344,8 @@
 
         .task-description {
             color: var(--text-secondary);
-            line-height: 1.5;
             margin-bottom: 12px;
-            white-space: pre-wrap;
-            word-break: break-word;
             font-size: 14px;
-        }
-
-        @media (min-width: 768px) {
-            .task-description {
-                line-height: 1.6;
-            }
         }
 
         .task-actions {
@@ -582,39 +354,15 @@
             gap: 8px;
         }
 
-        @media (min-width: 768px) {
-            .task-actions {
-                display: flex;
-                flex-wrap: wrap;
-            }
-        }
-
         .action-btn {
-            padding: 10px 14px;
+            padding: 10px;
             font-size: 12px;
-            border-radius: 10px;
-            min-width: 0;
-        }
-
-        @media (min-width: 768px) {
-            .action-btn {
-                flex: 1;
-                min-width: 80px;
-                padding: 10px 16px;
-                font-size: 13px;
-            }
         }
 
         .chat-container {
             display: flex;
             flex-direction: column;
             height: 400px;
-        }
-
-        @media (min-width: 768px) {
-            .chat-container {
-                height: 500px;
-            }
         }
 
         .chat-info {
@@ -628,14 +376,6 @@
             color: var(--accent);
         }
 
-        @media (min-width: 768px) {
-            .chat-info {
-                padding: 16px;
-                margin-bottom: 16px;
-                font-size: 14px;
-            }
-        }
-
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -646,89 +386,30 @@
             background: var(--bg-secondary);
             border-radius: 14px;
             margin-bottom: 14px;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (min-width: 768px) {
-            .chat-messages {
-                gap: 12px;
-                padding: 16px;
-                border-radius: 16px;
-                margin-bottom: 16px;
-            }
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        @media (min-width: 768px) {
-            .chat-messages::-webkit-scrollbar {
-                width: 6px;
-            }
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
         }
 
         .message {
             max-width: 85%;
             padding: 10px 14px;
             border-radius: 14px;
-            line-height: 1.5;
-            animation: messageIn 0.3s ease;
             font-size: 14px;
-            word-break: break-word;
-        }
-
-        @media (min-width: 768px) {
-            .message {
-                max-width: 80%;
-                padding: 12px 16px;
-                border-radius: 16px;
-            }
-        }
-
-        @keyframes messageIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
         .message.user {
             background: var(--accent);
             color: white;
             align-self: flex-end;
-            border-bottom-right-radius: 4px;
         }
 
         .message.assistant {
             background: var(--bg-tertiary);
             color: var(--text-primary);
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
         }
 
         .chat-input-group {
             display: flex;
             gap: 10px;
-        }
-
-        @media (min-width: 768px) {
-            .chat-input-group {
-                gap: 12px;
-            }
         }
 
         .chat-input-group input {
@@ -738,49 +419,12 @@
         .chat-input-group .btn {
             width: auto;
             padding: 14px 18px;
-            font-size: 14px;
-        }
-
-        @media (min-width: 768px) {
-            .chat-input-group .btn {
-                padding: 14px 24px;
-                font-size: 15px;
-            }
         }
 
         .empty-state {
             text-align: center;
             padding: 40px 20px;
             color: var(--text-secondary);
-        }
-
-        @media (min-width: 768px) {
-            .empty-state {
-                padding: 60px 20px;
-            }
-        }
-
-        .empty-state-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-
-        @media (min-width: 768px) {
-            .empty-state-icon {
-                font-size: 48px;
-                margin-bottom: 16px;
-            }
-        }
-
-        .empty-state-text {
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        @media (min-width: 768px) {
-            .empty-state-text {
-                font-size: 16px;
-            }
         }
 
         .loader {
@@ -793,13 +437,6 @@
             animation: spin 0.8s linear infinite;
         }
 
-        @media (min-width: 768px) {
-            .loader {
-                width: 18px;
-                height: 18px;
-            }
-        }
-
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -809,20 +446,8 @@
             margin-bottom: 14px;
         }
 
-        @media (min-width: 768px) {
-            .search-box {
-                margin-bottom: 16px;
-            }
-        }
-
         .search-box input {
             padding-left: 40px;
-        }
-
-        @media (min-width: 768px) {
-            .search-box input {
-                padding-left: 44px;
-            }
         }
 
         .search-icon {
@@ -831,28 +456,6 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-            pointer-events: none;
-        }
-
-        @media (min-width: 768px) {
-            .search-icon {
-                left: 16px;
-            }
-        }
-
-        /* Touch improvements for mobile */
-        @media (hover: none) {
-            .btn:hover {
-                transform: none;
-            }
-            
-            .task-card:hover {
-                transform: none;
-            }
-            
-            .stat-card:hover {
-                transform: none;
-            }
         }
     </style>
 </head>
@@ -863,15 +466,12 @@
                 <span>📅</span>
                 <span>SmartDay</span>
             </div>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"></button>
+            <button class="theme-toggle" onclick="toggleTheme()"></button>
         </div>
 
         <div class="grid">
-            <!-- LEFT PANEL: TASKS -->
             <div class="panel">
-                <div class="panel-title">
-                    <span>Мои задачи</span>
-                </div>
+                <div class="panel-title">Мои задачи</div>
 
                 <div class="stats">
                     <div class="stat-card">
@@ -895,7 +495,7 @@
 
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="search" placeholder="Поиск задач..." oninput="renderTasks()">
+                    <input type="text" id="search" placeholder="Поиск..." oninput="renderTasks()">
                 </div>
 
                 <div class="input-group">
@@ -911,11 +511,11 @@
                 </div>
 
                 <div class="input-group">
-                    <textarea id="description" placeholder="Описание задачи (необязательно)"></textarea>
+                    <textarea id="description" placeholder="Описание (необязательно)"></textarea>
                 </div>
 
                 <div class="input-group">
-                    <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Приоритет</div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">Приоритет</div>
                     <div class="priority-grid">
                         <button class="priority-btn urgent" onclick="selectPriority('urgent')">
                             <span>🔥</span>
@@ -935,14 +535,10 @@
                 <button class="btn" onclick="addTask()">Добавить задачу</button>
 
                 <div class="tasks-list" id="tasksList" style="margin-top: 20px;">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📝</div>
-                        <div class="empty-state-text">Нет задач</div>
-                    </div>
+                    <div class="empty-state">📝<br>Нет задач</div>
                 </div>
             </div>
 
-            <!-- RIGHT PANEL: AI CHAT -->
             <div class="panel">
                 <div class="panel-title">
                     <span>🤖</span>
@@ -951,22 +547,16 @@
 
                 <div class="chat-info" id="chatInfo">Общий чат</div>
 
-                <button class="btn secondary" id="backBtn" style="display:none; margin-bottom: 14px" onclick="closeChat()">
-                    ← Вернуться
-                </button>
+                <button class="btn secondary" id="backBtn" style="display:none; margin-bottom: 14px" onclick="closeChat()">← Вернуться</button>
 
                 <div class="chat-container">
                     <div class="chat-messages" id="chatMessages">
-                        <div class="message assistant">
-                            Привет! Я AI помощник SmartDay. Могу помочь разбить задачу на шаги, оценить время выполнения, расставить приоритеты. Просто расскажи о своей задаче!
-                        </div>
+                        <div class="message assistant">Привет! Я AI помощник SmartDay. Помогу разбить задачу на шаги, оценить время, расставить приоритеты!</div>
                     </div>
 
                     <div class="chat-input-group">
                         <input type="text" id="chatInput" placeholder="Сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
-                        <button class="btn" onclick="sendMessage()" id="sendBtn">
-                            ➤
-                        </button>
+                        <button class="btn" onclick="sendMessage()" id="sendBtn">➤</button>
                     </div>
                 </div>
             </div>
@@ -981,22 +571,18 @@
         let globalChat = [];
         let theme = 'light';
 
-        // Инициализация при загрузке
         function init() {
-            initTheme();
-            loadTasks();
-            loadGlobalChat();
-            renderTasks();
-            updateStats();
-        }
-
-        // Тема
-        function initTheme() {
             const saved = localStorage.getItem('smartday_theme');
             if (saved) {
                 theme = saved;
                 document.documentElement.setAttribute('data-theme', theme);
             }
+            const savedTasks = localStorage.getItem('smartday_tasks');
+            if (savedTasks) tasks = JSON.parse(savedTasks);
+            const savedChat = localStorage.getItem('smartday_globalchat');
+            if (savedChat) globalChat = JSON.parse(savedChat);
+            renderTasks();
+            updateStats();
         }
 
         function toggleTheme() {
@@ -1005,7 +591,6 @@
             localStorage.setItem('smartday_theme', theme);
         }
 
-        // Управление задачами
         function selectPriority(p) {
             priority = p;
             document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
@@ -1022,26 +607,20 @@
         function addTask() {
             const title = document.getElementById('title').value.trim();
             const description = document.getElementById('description').value.trim();
+            if (!title) { alert('Введите название'); return; }
             
-            if (!title) {
-                alert('Введите название задачи');
-                return;
-            }
-            
-            const task = {
+            tasks.unshift({
                 id: Date.now(),
                 title,
                 description,
                 priority,
                 completed: false,
                 created: new Date().toLocaleString('ru'),
-                chat: [] // История чата для этой задачи
-            };
+                chat: []
+            });
             
-            tasks.unshift(task);
-            saveTasks();
+            localStorage.setItem('smartday_tasks', JSON.stringify(tasks));
             renderTasks();
-            
             document.getElementById('title').value = '';
             document.getElementById('description').value = '';
             selectPriority('normal');
@@ -1049,10 +628,10 @@
         }
 
         function deleteTask(id) {
-            if (!confirm('Удалить задачу?')) return;
+            if (!confirm('Удалить?')) return;
             tasks = tasks.filter(t => t.id !== id);
             if (currentTask === id) closeChat();
-            saveTasks();
+            localStorage.setItem('smartday_tasks', JSON.stringify(tasks));
             renderTasks();
             updateStats();
         }
@@ -1061,13 +640,12 @@
             const task = tasks.find(t => t.id === id);
             if (task) {
                 task.completed = !task.completed;
-                saveTasks();
+                localStorage.setItem('smartday_tasks', JSON.stringify(tasks));
                 renderTasks();
                 updateStats();
             }
         }
 
-        // Чат
         function openChat(task) {
             currentTask = task.id;
             document.getElementById('chatInfo').textContent = `Чат: ${task.title}`;
@@ -1077,11 +655,9 @@
             chat.innerHTML = '';
             
             if (task.chat.length === 0) {
-                addMessageToDOM('assistant', `Обсудим задачу "${task.title}"? Могу помочь разбить её на шаги, оценить время или расставить приоритеты.`);
+                addMsg('assistant', `Обсудим "${task.title}"? Помогу разбить на шаги!`);
             } else {
-                task.chat.forEach(m => {
-                    addMessageToDOM(m.role, m.content);
-                });
+                task.chat.forEach(m => addMsg(m.role, m.content));
             }
         }
 
@@ -1094,11 +670,9 @@
             chat.innerHTML = '';
             
             if (globalChat.length === 0) {
-                addMessageToDOM('assistant', 'Привет! Я AI помощник SmartDay. Могу помочь разбить задачу на шаги, оценить время выполнения, расставить приоритеты. Просто расскажи о своей задаче!');
+                addMsg('assistant', 'Привет! Я AI помощник SmartDay. Помогу разбить задачу на шаги, оценить время, расставить приоритеты!');
             } else {
-                globalChat.forEach(m => {
-                    addMessageToDOM(m.role, m.content);
-                });
+                globalChat.forEach(m => addMsg(m.role, m.content));
             }
         }
 
@@ -1109,15 +683,13 @@
             
             let filtered = tasks.filter(t => {
                 const matchTab = tab === 'active' ? !t.completed : t.completed;
-                const matchSearch = !search || 
-                    t.title.toLowerCase().includes(search) || 
-                    t.description.toLowerCase().includes(search);
+                const matchSearch = !search || t.title.toLowerCase().includes(search) || t.description.toLowerCase().includes(search);
                 return matchTab && matchSearch;
             });
 
             if (sortBy === 'priority') {
-                const priorityOrder = {urgent: 0, normal: 1, low: 2};
-                filtered.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+                const order = {urgent: 0, normal: 1, low: 2};
+                filtered.sort((a, b) => order[a.priority] - order[b.priority]);
             } else if (sortBy === 'title') {
                 filtered.sort((a, b) => a.title.localeCompare(b.title));
             } else {
@@ -1125,28 +697,19 @@
             }
             
             if (filtered.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
-                        <div class="empty-state-text">Ничего не найдено</div>
-                    </div>
-                `;
+                list.innerHTML = '<div class="empty-state">🔍<br>Ничего не найдено</div>';
                 return;
             }
 
             list.innerHTML = filtered.map(t => {
-                const priorityClass = t.priority;
-                const priorityText = {
-                    urgent: '🔥 Срочно',
-                    normal: '📌 Обычно',
-                    low: '✅ Позже'
-                }[t.priority];
+                const pClass = t.priority;
+                const pText = {urgent: '🔥 Срочно', normal: '📌 Обычно', low: '✅ Позже'}[t.priority];
                 
                 return `
                     <div class="task-card ${t.completed ? 'completed' : ''}">
                         <div class="task-header">
                             <div class="task-title">${esc(t.title)}</div>
-                            <div class="priority-badge ${priorityClass}">${priorityText}</div>
+                            <div class="priority-badge ${pClass}">${pText}</div>
                         </div>
                         ${t.description ? `<div class="task-description">${esc(t.description)}</div>` : ''}
                         <div class="task-actions">
@@ -1164,7 +727,7 @@
             const msg = input.value.trim();
             if (!msg) return;
 
-            addMessageToDOM('user', msg);
+            addMsg('user', msg);
             input.value = '';
 
             const btn = document.getElementById('sendBtn');
@@ -1172,55 +735,40 @@
             btn.innerHTML = '<span class="loader"></span>';
 
             try {
-                let history;
-                let system = 'Ты AI помощник для управления задачами SmartDay. Помогаешь разбивать задачи на шаги, оценивать время, расставлять приоритеты. Отвечай кратко и по делу на русском языке.';
+                let history, system = 'Ты AI помощник SmartDay. Помогаешь с задачами. Отвечай кратко на русском.';
                 
                 if (currentTask) {
                     const task = tasks.find(t => t.id === currentTask);
                     history = task.chat;
-                    system += ` Обсуждаем задачу: "${task.title}".`;
-                    if (task.description) {
-                        system += ` Описание: "${task.description}".`;
-                    }
+                    system += ` Задача: "${task.title}".`;
+                    if (task.description) system += ` Описание: "${task.description}".`;
                 } else {
                     history = globalChat;
                 }
 
                 history.push({role: 'user', content: msg});
 
-                // Используем прокси для обхода CORS
-                const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://api.anthropic.com/v1/messages'), {
+                const res = await fetch('/.netlify/functions/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': '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',
-                        'anthropic-version': '2023-06-01'
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        system,
-                        messages: history
-                    })
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ system, messages: history })
                 });
 
                 const data = await res.json();
                 const reply = data.content[0].text;
                 
                 history.push({role: 'assistant', content: reply});
-                addMessageToDOM('assistant', reply);
+                addMsg('assistant', reply);
 
-                // Сохраняем чат
                 if (currentTask) {
-                    const task = tasks.find(t => t.id === currentTask);
-                    task.chat = history;
-                    saveTasks(); // Чат сохраняется вместе с задачей!
+                    tasks.find(t => t.id === currentTask).chat = history;
+                    localStorage.setItem('smartday_tasks', JSON.stringify(tasks));
                 } else {
-                    saveGlobalChat();
+                    localStorage.setItem('smartday_globalchat', JSON.stringify(globalChat));
                 }
 
             } catch (e) {
-                addMessageToDOM('assistant', 'Ошибка подключения к AI. Проверьте API ключ и интернет.');
+                addMsg('assistant', 'Ошибка AI. Проверьте настройки.');
                 console.error(e);
             } finally {
                 btn.disabled = false;
@@ -1228,7 +776,7 @@
             }
         }
 
-        function addMessageToDOM(role, content) {
+        function addMsg(role, content) {
             const chat = document.getElementById('chatMessages');
             const msg = document.createElement('div');
             msg.className = `message ${role}`;
@@ -1237,33 +785,10 @@
             chat.scrollTop = chat.scrollHeight;
         }
 
-        // Сохранение и загрузка
         function updateStats() {
             document.getElementById('totalCount').textContent = tasks.length;
             document.getElementById('activeCount').textContent = tasks.filter(t => !t.completed).length;
             document.getElementById('completedCount').textContent = tasks.filter(t => t.completed).length;
-        }
-
-        function saveTasks() {
-            localStorage.setItem('smartday_tasks', JSON.stringify(tasks));
-        }
-
-        function loadTasks() {
-            const saved = localStorage.getItem('smartday_tasks');
-            if (saved) {
-                tasks = JSON.parse(saved);
-            }
-        }
-
-        function saveGlobalChat() {
-            localStorage.setItem('smartday_globalchat', JSON.stringify(globalChat));
-        }
-
-        function loadGlobalChat() {
-            const saved = localStorage.getItem('smartday_globalchat');
-            if (saved) {
-                globalChat = JSON.parse(saved);
-            }
         }
 
         function esc(text) {
@@ -1272,7 +797,6 @@
             return div.innerHTML;
         }
 
-        // Запуск при загрузке
         init();
     </script>
 </body>
